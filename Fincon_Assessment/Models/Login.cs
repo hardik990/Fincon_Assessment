@@ -20,12 +20,26 @@ namespace Fincon_Assessment.Models
             try
             {
                 string URL = string.Empty;
+                string Basicauth = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["ApiUserName"].ToString() + ":" + ConfigurationManager.AppSettings["ApiPassword"].ToString()));
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + Basicauth);
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("Login/{0}/{1}", login.UserName, login.Password);
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        }
+                        else
+                        {
+                            ReturnAPI returnAPI = new ReturnAPI();
+                            returnAPI.data = null;
+                            returnAPI.status = Status.unauthorised;
+                            returnAPI.message = "Request Unauthorised";
+                            return returnAPI;
+                            //return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        }
                     }
                 }
             }
@@ -34,6 +48,6 @@ namespace Fincon_Assessment.Models
                 //Error Log
                 throw Ex;
             }
-		}
+        }
     }
 }

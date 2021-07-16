@@ -17,6 +17,7 @@ namespace Fincon_Assessment.Models
         OK = 200,
         InternalServerError = 500,
         InvalidParameter = 503,
-        BadRequest = 400
+        BadRequest = 400,
+        unauthorised = 401
     }
 }

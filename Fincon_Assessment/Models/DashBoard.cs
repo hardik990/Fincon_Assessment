@@ -21,17 +21,28 @@ namespace Fincon_Assessment.Models
             try
             {
                 string URL = string.Empty;
+                string Basicauth = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["ApiUserName"].ToString() + ":" + ConfigurationManager.AppSettings["ApiPassword"].ToString()));
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + Basicauth);
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("Quotation/{0}", MySession.Current.UserId);
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        ReturnAPI objdata = JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
-                        if (objdata.status == Status.OK)
+                        if (response.IsSuccessStatusCode)
                         {
-                            List<Quotation> lstQuotation = JsonConvert.DeserializeObject<List<Quotation>>(objdata.data.ToString());
-                            return lstQuotation;
+                            ReturnAPI objdata = JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                            if (objdata.status == Status.OK)
+                            {
+
+                                List<Quotation> lstQuotation = JsonConvert.DeserializeObject<List<Quotation>>(objdata.data.ToString());
+                                return lstQuotation;
+                            }
                         }
+                        else
+                        {
+                            return new List<Quotation>();
+                        }
+
                     }
                 }
                 return new List<Quotation>();
@@ -47,12 +58,26 @@ namespace Fincon_Assessment.Models
             try
             {
                 string URL = string.Empty;
+                string Basicauth = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["ApiUserName"].ToString() + ":" + ConfigurationManager.AppSettings["ApiPassword"].ToString()));
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + Basicauth);
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("DeleteQuotation/{0}/{1}", Id, MySession.Current.UserId.ToString());
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        }
+                        else
+                        {
+                            ReturnAPI returnAPI = new ReturnAPI();
+                            returnAPI.data = null;
+                            returnAPI.status = Status.unauthorised;
+                            returnAPI.message = "Request Unauthorised";
+                            return returnAPI;
+                            //return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        }
                     }
                 }
             }

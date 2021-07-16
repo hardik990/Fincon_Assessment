@@ -23,13 +23,27 @@ namespace Fincon_Assessment.Models
             try
             {
                 string URL = string.Empty;
+                string Basicauth = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["ApiUserName"].ToString() + ":" + ConfigurationManager.AppSettings["ApiPassword"].ToString()));
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + Basicauth);
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + "Register";
                     var stringContent = new StringContent(JsonConvert.SerializeObject(_register), Encoding.UTF8, "application/json");
                     using (HttpResponseMessage response = client.PostAsync(URL, stringContent).Result)
                     {
-                        return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        }
+                        else
+                        {
+                            ReturnAPI returnAPI = new ReturnAPI();
+                            returnAPI.data = null;
+                            returnAPI.status = Status.unauthorised;
+                            returnAPI.message = "Request Unauthorised";
+                            return returnAPI;
+                            //return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        }
                     }
                 }
             }

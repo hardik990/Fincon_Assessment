@@ -98,7 +98,6 @@ C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\bin\Unity.Mvc.p
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\bin\Unity.Mvc.xml
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\bin\Antlr3.Runtime.pdb
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\obj\Debug\Fincon_Assessment.csprojAssemblyReference.cache
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\obj\Debug\Fincon_Assessment.csproj.CoreCompileInputs.cache
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\obj\Debug\Fincon_Assessment.csproj.CopyComplete
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment\obj\Debug\Fincon_Assessment.dll

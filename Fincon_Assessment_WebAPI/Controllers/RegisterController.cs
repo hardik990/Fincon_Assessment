@@ -1,27 +1,35 @@
 ﻿using Fincon_Assessment_WebAPI.DBContext;
+using Fincon_Assessment_WebAPI.MessageHandlers;
 using Fincon_Assessment_WebAPI.Models;
 
 using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 
 namespace Fincon_Assessment_WebAPI.Controllers
 {
+    [RoutePrefix("api")]
     public class RegisterController : ApiController
     {
         DBcontext _DBcontext { get; set; }
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("Register")]
+
+        [BasicAuthentication]
+        [HttpPost]
+        [Route("Register")]
         public HttpResponseMessage Register([FromBody] Register _Register)
         {
             var result = new Response();
+            if (!ModelState.IsValid)
+            {
+                result.status = Status.BadRequest;
+                result.message = "ModelState is Not valid.";
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            
             try
             {
                 if (_DBcontext == null)
@@ -49,6 +57,5 @@ namespace Fincon_Assessment_WebAPI.Controllers
             }
         }
 
-       
     }
 }

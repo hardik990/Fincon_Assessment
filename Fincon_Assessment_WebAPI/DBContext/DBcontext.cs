@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 using Fincon_Assessment_WebAPI.Models;
@@ -69,7 +70,7 @@ namespace Fincon_Assessment_WebAPI.DBContext
             // we can also create different API for configure DB & table.
             if (checkTable())
             {
-                Register lstresult =null;
+                Register lstresult = null;
                 using (var conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
                 {
                     if (conn.State == ConnectionState.Closed)
@@ -102,7 +103,7 @@ namespace Fincon_Assessment_WebAPI.DBContext
                 {
                     return new KeyValuePair<bool, dynamic>(false, "Email & Password Incorrect.");
                 }
-                else if(lstresult.IsActive ==false)
+                else if (lstresult.IsActive == false)
                 {
                     sendEmail(lstresult.Id.ToString());
                     return new KeyValuePair<bool, dynamic>(false, "Pease check Your Email to Active your Account.");
@@ -238,12 +239,12 @@ namespace Fincon_Assessment_WebAPI.DBContext
                                 objdata.CustomerAddress = Dr["customeraddress"].ToString();
                                 objdata.UserID = long.Parse(Dr["userid"].ToString());
                                 objdata.Status = long.Parse(Dr["status"].ToString());
-                                if(objdata.Status == 0)
+                                if (objdata.Status == 0)
                                 {
                                     //Peending
                                     objdata.ColourIndex = "#FFFF99";
                                 }
-                                else if(objdata.Status == 1)
+                                else if (objdata.Status == 1)
                                 {
                                     //Active
                                     objdata.ColourIndex = "#90ee90";
@@ -253,7 +254,7 @@ namespace Fincon_Assessment_WebAPI.DBContext
                                     //Reject
                                     objdata.ColourIndex = "#ffcccb";
                                 }
-                                
+
                                 lstresult.Add(objdata);
                             }
                         }

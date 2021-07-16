@@ -82,3 +82,9 @@ C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debu
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.csproj.CopyComplete
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.dll
 C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.pdb
+C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\bin\Swashbuckle.Core.dll
+C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\bin\WebActivatorEx.dll
+C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.csprojAssemblyReference.cache
+C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\bin\Microsoft.OpenApi.dll
+C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\bin\Microsoft.OpenApi.pdb
+C:\Users\Hardik\source\repos\Fincon_Assessment\Fincon_Assessment_WebAPI\bin\Microsoft.OpenApi.xml
