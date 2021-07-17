@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 
 CREATE TABLE [dbo].[tblQuotation](
-	[id] [int] NOT NULL,
+	[id] [int] IDENTITY(1,1) NOT NULL,
 	[date] [datetime] NULL,
 	[quotationnumber] [uniqueidentifier] NULL,
 	[customernamer] [varchar](250) NULL,
@@ -25,7 +25,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 
 CREATE TABLE [dbo].[tblQuotationDetails](
-	[id] [int] NOT NULL,
+	[id] [int] IDENTITY(1,1) NOT NULL,
 	[quotationid] [int] NULL,
 	[description] [varchar](100) NULL,
 	[quantity] [decimal](18, 2) NULL,
