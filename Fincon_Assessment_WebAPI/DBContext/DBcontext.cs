@@ -409,6 +409,37 @@ namespace Fincon_Assessment_WebAPI.DBContext
                 return new KeyValuePair<bool, dynamic>(false, "Database Not Found.");
             }
         }
+        public KeyValuePair<bool, dynamic> DeleteQuotationItem(string Id)
+        {
+            // we can also create different API for configure DB & table.
+            if (checkTable())
+            {
+                //Quotation lstresult = new Quotation();
+                using (var conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
+                {
+                    if (conn.State == ConnectionState.Closed)
+                    {
+                        conn.Open();
+                    }
+                    string sqlcommand = "delete  tblQuotationDetails    Where Id = @Id";
+                    using (var sqlcmd = new SqlCommand(sqlcommand, conn))
+                    {
+                        sqlcmd.CommandText = sqlcommand;
+                        sqlcmd.CommandType = CommandType.Text;
+                        sqlcmd.Parameters.Clear();
+                        sqlcmd.Parameters.AddWithValue("@Id", Id);
+                        sqlcmd.ExecuteNonQuery();
+
+                    }
+                }
+                KeyValuePair<bool, dynamic> lstresult = GetQuotation(userid);
+                return new KeyValuePair<bool, dynamic>(true, lstresult.Value);
+            }
+            else
+            {
+                return new KeyValuePair<bool, dynamic>(false, "Database Not Found.");
+            }
+        }
         private bool checkTable()
         {
             string checkDB = AppDomain.CurrentDomain.BaseDirectory + @"App_Data\Fincon.mdf";

@@ -117,7 +117,7 @@
                                     <div class="form-row">
                                         <div class="form-group col">
                                             <label>Quotation Number</label>
-                                            @Html.LabelFor(m => m.QuotationNumber, new { @class = "form-control", @maxlength = "50", @tabindex = "3" })
+                                            @Html.TextBoxFor(m => m.QuotationNumber, new { @class = "form-control", @maxlength = "50", @tabindex = "3", @readonly = true })
                                         </div>
                                         <div class="form-group col">
                                             <label>Date</label>
@@ -144,6 +144,7 @@
                                                             <th>Vat</th>
                                                             <th>Price</th>
                                                             <th>Action</th>
+                                                            <th style="display:none">hidden</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -151,31 +152,44 @@
                                                             foreach (var e1 in Model.lstQuotationDetails)
                                                             {
                                                                 <tr>
-                                                                    <td>
-                                                                        @Html.TextBoxFor(x => e1.Description)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.TextBoxFor(x => e1.Quantity)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.TextBoxFor(x => e1.Price)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.TextBoxFor(x => e1.Vat)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.TextBoxFor(x => e1.TotalIncludingVat)
-                                                                    </td>
                                                                     @if (e1.isNew)
                                                                     {
+
                                                                         <td>
-                                                                            <a onclick="ValidateItem(this);" href="@Url.Action("AddQuotationItem", "General",new { QuotationID= Model.Id,QuotationDetailsId = e1.Id, })"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                                                            @Html.TextBoxFor(x => e1.Description)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBoxFor(x => e1.Quantity)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBoxFor(x => e1.Price)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBoxFor(x => e1.Vat)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBoxFor(x => e1.TotalIncludingVat)
+                                                                        </td>
+                                                                        <td>
+                                                                            <a onclick="return ValidateItem();" href="@Url.Action("AddQuotationItem", "General",new { QuotationID= Model.Id,QuotationDetailsId = e1.Id, })"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                                                        </td>
+                                                                        <td style="display: none">
+                                                                            @Html.TextBoxFor(x => e1.isNew)
                                                                         </td>
                                                                     }
                                                                     else
                                                                     {
+
+                                                                        <td class="text-right">@e1.Description</td>
+                                                                        <td class="text-right">@e1.Quantity</td>
+                                                                        <td class="text-right">@e1.Price</td>
+                                                                        <td class="text-right">@e1.Vat</td>
+                                                                        <td class="text-right">@e1.TotalIncludingVat</td>
                                                                         <td>
                                                                             <a href="@Url.Action("DeleteQuotationItem", "General",new { QuotationID= Model.Id,QuotationDetailsId = e1.Id, })"><i class="fa fa-remove" aria-hidden="true"></i></a>
+                                                                        </td>
+                                                                        <td style="display: none">
+                                                                            @Html.TextBoxFor(x => e1.isNew)
                                                                         </td>
                                                                     }
                                                                 </tr>
@@ -186,10 +200,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    foreach (var e1 in Model.lstQuotationDetails)
-                                    {
-
-                                    }
                                     if (@HttpContext.Current.Session["IsEdit"] != null && @HttpContext.Current.Session["IsEdit"].ToString() == "1")
                                     {
 
@@ -207,7 +217,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        function Validate() {
+        function ValidateItem(objdat) {
             var ErrorMessage = "";
             if ($("#CustomerNamer").val() == "") {
                 ErrorMessage = ErrorMessage + "Please Enter Customer Name. \n"
@@ -219,15 +229,25 @@
                 ErrorMessage = ErrorMessage + "Please Enter Currect Date. \n"
             }
 
+            //var table = document.getElementById("table1");
+            ////iterate trough rows
+            //for (var i = 0, row; row = table.rows[i]; i++) {
+            //    if (row.cells[6].val() == true) {
+            //        for (var j = 0, col; col = row.cells[j]; j++) {
+            //            alert("asd");
+            //        }
+            //    }
+
+            //}
+
             if (ErrorMessage != "") {
                 alert(ErrorMessage);
                 return false;
             }
-            return true;
-        }
-
-        function ValidateItem(objdata) {
-
+            else {
+                alert(objdat);
+            }
+            return false;
         }
     </script>
 
@@ -237,9 +257,21 @@
     <script src="~/js/bootstrap.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="~/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="~/js/jquery.steps.min.js"></script>
-    <script type="text/javascript" src="~/js/bd-wizard.js"></script>
     <script type="text/javascript" src="~/js/custom.js"></script>
-    <script src="~/js/BusyIndicator.js"></script>
+    <script type="text/javascript" src="~/js/BusyIndicator.js"></script>
+    <script type="text/javascript">
+        $('#table1').DataTable({
+            "sDom": '<"top">rt<"bottom"p>',
+            columnDefs: [{ orderable: false, targets: [1, 2] }]
+        });
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+        $('#dpd1').datepicker({
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        });
+
+    </script>
 </body>
 </html>

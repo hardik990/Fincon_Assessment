@@ -18,7 +18,6 @@ namespace Fincon_Assessment.Controllers
         {
             this.objIGeneral = objiGeneral;
         }
-
         public ActionResult Index(string ID)
         {
             if (ID == null)
@@ -40,6 +39,7 @@ namespace Fincon_Assessment.Controllers
             {
                 _Quotation = GetQuotation(int.Parse(ID));
                 QuotationDetails objblank = new QuotationDetails();
+                objblank.Id = 0;
                 objblank.isNew = true;
                 _Quotation.lstQuotationDetails.Add(objblank);
                 switch (_Quotation.Status)
@@ -57,15 +57,18 @@ namespace Fincon_Assessment.Controllers
             }
             else
             {
+                _Quotation.QuotationNumber = Guid.NewGuid();
                 _Quotation.lstQuotationDetails = new List<QuotationDetails>();
+                _Quotation.date = DateTime.Now.ToString("MM-dd-yyyy");
                 QuotationDetails objblank = new QuotationDetails();
+                objblank.Id = 0;
+                objblank.isNew = true;
                 _Quotation.lstQuotationDetails.Add(objblank);
             }
 
             this.BindDropDownListForStatus(_Quotation);
             return View(_Quotation);
         }
-
         [HttpPost]
         public ActionResult Index(Quotation _Quotation)
         {
@@ -87,6 +90,12 @@ namespace Fincon_Assessment.Controllers
             {
                 return new Quotation();
             }
+
+        }
+        public ActionResult DeleteQuotationItem(string Id)
+        {
+            ReturnAPI objdata = this.objIGeneral.DeleteQuotationItem(int.Parse(Id));
+            return this.RedirectToAction("Index", "DashBoard", new { message = string.Empty });
 
         }
     }

@@ -174,5 +174,45 @@ namespace Fincon_Assessment_WebAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
         }
+
+
+        [BasicAuthentication]
+        [HttpGet]
+        [Route("DeleteQuotationItem/{Id}")]
+        public HttpResponseMessage DeleteQuotationItem(string ID)
+        {
+            var result = new Response();
+            if (!ModelState.IsValid)
+            {
+                result.status = Status.BadRequest;
+                result.message = "ModelState is Not valid.";
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+            try
+            {
+                if (_DBcontext == null)
+                    _DBcontext = new DBcontext();
+                KeyValuePair<bool, dynamic> isValid = _DBcontext.DeleteQuotationItem(ID);
+                if (isValid.Key)
+                {
+                    result.data = JsonConvert.SerializeObject(isValid.Value);
+                    result.status = Status.OK;
+                    result.message = string.Empty;
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    result.status = Status.InternalServerError;
+                    result.message = isValid.Value.ToString();
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, result);
+                }
+            }
+            catch (Exception Ex)
+            {
+                result.status = Status.BadRequest;
+                result.message = Ex.ToString();
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+        }
     }
 }

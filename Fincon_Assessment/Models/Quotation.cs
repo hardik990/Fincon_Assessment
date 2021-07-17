@@ -14,7 +14,7 @@ namespace Fincon_Assessment.Models
         }
         public long Id { get; set; }
         public long UserID { get; set; }
-        public DateTime date { get; set; }
+        public string date { get; set; }
         public Guid QuotationNumber { get; set; }
         public string CustomerNamer { get; set; }
         public string CustomerAddress { get; set; }

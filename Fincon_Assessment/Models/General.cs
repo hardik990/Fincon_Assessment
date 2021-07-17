@@ -32,7 +32,7 @@ namespace Fincon_Assessment.Models
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("viewQuotation/{0}", QuotationId);
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        if(response.IsSuccessStatusCode)
+                        if (response.IsSuccessStatusCode)
                         {
                             return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                         }
@@ -45,7 +45,41 @@ namespace Fincon_Assessment.Models
                             return returnAPI;
                             //return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                         }
-                        
+
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                //Error Log
+                throw Ex;
+            }
+        }
+        public ReturnAPI DeleteQuotationItem(int QuotationItemId)
+        {
+            try
+            {
+                string URL = string.Empty;
+                string Basicauth = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["ApiUserName"].ToString() + ":" + ConfigurationManager.AppSettings["ApiPassword"].ToString()));
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + Basicauth);
+                    URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("DeleteQuotationItem/{0}", QuotationItemId);
+                    using (HttpResponseMessage response = client.GetAsync(URL).Result)
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
+                        }
+                        else
+                        {
+                            ReturnAPI returnAPI = new ReturnAPI();
+                            returnAPI.data = null;
+                            returnAPI.status = Status.unauthorised;
+                            returnAPI.message = "Request Unauthorised";
+                            return returnAPI;
+                        }
+
                     }
                 }
             }

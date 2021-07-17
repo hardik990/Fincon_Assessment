@@ -11,5 +11,6 @@ namespace Fincon_Assessment.Models
     {
         List<SelectListItem> GetStatusForDropDown();
         ReturnAPI GetGetQuotation(int QuotationId);
+        ReturnAPI DeleteQuotationItem(int QuotationItemId);
     }
 }
