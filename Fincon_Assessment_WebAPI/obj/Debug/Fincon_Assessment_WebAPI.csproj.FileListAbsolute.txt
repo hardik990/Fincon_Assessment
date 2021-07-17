@@ -177,3 +177,4 @@ C:\Users\Hardik\source\repos\Fincon_Assessments\Fincon_Assessment\Fincon_Assessm
 C:\Users\Hardik\source\repos\Fincon_Assessments\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.csproj.CopyComplete
 C:\Users\Hardik\source\repos\Fincon_Assessments\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.dll
 C:\Users\Hardik\source\repos\Fincon_Assessments\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.pdb
+C:\Users\Hardik\source\repos\Fincon_Assessments\Fincon_Assessment\Fincon_Assessment_WebAPI\obj\Debug\Fincon_Assessment_WebAPI.csprojAssemblyReference.cache

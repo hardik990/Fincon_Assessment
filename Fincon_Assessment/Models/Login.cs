@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 
@@ -27,7 +28,7 @@ namespace Fincon_Assessment.Models
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("Login/{0}/{1}", login.UserName, login.Password);
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        if (response.IsSuccessStatusCode)
+                        if (response.StatusCode != HttpStatusCode.Unauthorized)
                         {
                             return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                         }

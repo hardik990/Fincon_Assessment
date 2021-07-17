@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web;
@@ -31,7 +32,7 @@ namespace Fincon_Assessment.Models
                     var stringContent = new StringContent(JsonConvert.SerializeObject(_register), Encoding.UTF8, "application/json");
                     using (HttpResponseMessage response = client.PostAsync(URL, stringContent).Result)
                     {
-                        if (response.IsSuccessStatusCode)
+                        if (response.StatusCode != HttpStatusCode.Unauthorized)
                         {
                             return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                         }

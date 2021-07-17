@@ -143,7 +143,11 @@
                                                             <th>Unit Price</th>
                                                             <th>Vat</th>
                                                             <th>Price</th>
-                                                            <th>Action</th>
+                                                            @if (@HttpContext.Current.Session["IsEdit"] != null && @HttpContext.Current.Session["IsEdit"].ToString() == "1")
+                                                            {
+                                                                <th>Action</th>
+                                                            }
+
                                                             <th style="display:none">hidden</th>
                                                         </tr>
                                                     </thead>
@@ -185,9 +189,14 @@
                                                                         <td class="text-right">@e1.Price</td>
                                                                         <td class="text-right">@e1.Vat</td>
                                                                         <td class="text-right">@e1.TotalIncludingVat</td>
-                                                                        <td>
-                                                                            <a href="@Url.Action("DeleteQuotationItem", "General",new { QuotationID= Model.Id,QuotationDetailsId = e1.Id, })"><i class="fa fa-remove" aria-hidden="true"></i></a>
-                                                                        </td>
+                                                                        if (@HttpContext.Current.Session["IsEdit"] != null && @HttpContext.Current.Session["IsEdit"].ToString() == "1")
+                                                                        {
+                                                                            <td>
+                                                                                <a href="@Url.Action("DeleteQuotationItem", "General",new { QuotationID= Model.Id,QuotationDetailsId = e1.Id, })"><i class="fa fa-remove" aria-hidden="true"></i></a>
+                                                                            </td>
+                                                                        }
+
+
                                                                         <td style="display: none">
                                                                             @Html.TextBoxFor(x => e1.isNew)
                                                                         </td>

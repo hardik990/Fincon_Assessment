@@ -24,13 +24,13 @@ namespace Fincon_Assessment.Controllers
             {
                 return this.RedirectToAction("Login", "Login");
             }
-            if (Session["IsEdit"] != null && Session["IsEdit"].ToString() == "1")
+            if (Session["IsEdit"] != null && Session["IsEdit"].ToString() == "0")
             {
-                Session["ActiveGrid"] = "General";
+                Session["ActiveGrid"] = "General (View)";
             }
             else
             {
-                Session["ActiveGrid"] = "General (View)";
+                Session["ActiveGrid"] = "General";
             }
             Functions.UpdateActiveID(ID);
 
@@ -38,10 +38,14 @@ namespace Fincon_Assessment.Controllers
             if (ID != "0")
             {
                 _Quotation = GetQuotation(int.Parse(ID));
-                QuotationDetails objblank = new QuotationDetails();
-                objblank.Id = 0;
-                objblank.isNew = true;
-                _Quotation.lstQuotationDetails.Add(objblank);
+                if (Session["IsEdit"] != null && Session["IsEdit"].ToString() == "1")
+                {
+                    QuotationDetails objblank = new QuotationDetails();
+                    objblank.Id = 0;
+                    objblank.isNew = true;
+                    _Quotation.lstQuotationDetails.Add(objblank);
+                }
+
                 switch (_Quotation.Status)
                 {
                     case QuotationStatus.Accepted:

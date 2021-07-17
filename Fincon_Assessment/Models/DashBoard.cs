@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 
@@ -28,7 +29,7 @@ namespace Fincon_Assessment.Models
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("Quotation/{0}", MySession.Current.UserId);
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        if (response.IsSuccessStatusCode)
+                        if (response.StatusCode != HttpStatusCode.Unauthorized)
                         {
                             ReturnAPI objdata = JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                             if (objdata.status == Status.OK)
@@ -65,7 +66,7 @@ namespace Fincon_Assessment.Models
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("DeleteQuotation/{0}/{1}", Id, MySession.Current.UserId.ToString());
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        if (response.IsSuccessStatusCode)
+                        if (response.StatusCode != HttpStatusCode.Unauthorized)
                         {
                             return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                         }

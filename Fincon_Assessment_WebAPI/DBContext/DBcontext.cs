@@ -432,8 +432,7 @@ namespace Fincon_Assessment_WebAPI.DBContext
 
                     }
                 }
-                KeyValuePair<bool, dynamic> lstresult = GetQuotation(userid);
-                return new KeyValuePair<bool, dynamic>(true, lstresult.Value);
+                return new KeyValuePair<bool, dynamic>(true, null);
             }
             else
             {

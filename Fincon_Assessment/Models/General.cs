@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
@@ -32,7 +33,7 @@ namespace Fincon_Assessment.Models
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("viewQuotation/{0}", QuotationId);
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        if (response.IsSuccessStatusCode)
+                        if (response.StatusCode != HttpStatusCode.Unauthorized)
                         {
                             return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                         }
@@ -67,7 +68,7 @@ namespace Fincon_Assessment.Models
                     URL = ConfigurationManager.AppSettings["BaseAddress"] + string.Format("DeleteQuotationItem/{0}", QuotationItemId);
                     using (HttpResponseMessage response = client.GetAsync(URL).Result)
                     {
-                        if (response.IsSuccessStatusCode)
+                        if (response.StatusCode != HttpStatusCode.Unauthorized)
                         {
                             return JsonConvert.DeserializeObject<ReturnAPI>(response.Content.ReadAsStringAsync().Result);
                         }
